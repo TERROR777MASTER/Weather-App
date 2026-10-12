@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101b35">
+  <title>SkyCast — Weather Forecast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="SkyCast home">
+        <span class="brand-mark">☼</span>
+        <span>Sky<span class="brand-light">Cast</span></span>
+      </a>
+      <div class="side-label">YOUR WEATHER</div>
+      <button class="side-link active" type="button"><span>◉</span> Overview</button>
+      <button class="side-link" type="button" id="useLocationBtn"><span>⌖</span> Use my location</button>
+      <div class="sidebar-bottom">
+        <div class="mini-weather">
+          <div class="mini-sun">☀</div>
+          <div><strong>Weather, made simple.</strong><p>Plan your day with confidence.</p></div>
+        </div>
+        <div class="sidebar-footer">SKYCAST WEATHER <span>•</span> COLLEGE PROJECT</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">WEATHER DASHBOARD</div>
+          <h1>Good day to check the sky<span class="title-dot">.</span></h1>
+          <p class="subheading">Live conditions and weather insights for your city.</p>
+        </div>
+        <form class="search-form" id="searchForm">
+          <span class="search-icon">⌕</span>
+          <input id="cityInput" type="search" placeholder="Search any city..." value="Delhi" aria-label="City name" required>
+          <button type="submit" id="searchBtn">Search <span>→</span></button>
+        </form>
+      </header>
+
+      <div class="notice" id="notice" role="status" aria-live="polite">
+        <span class="notice-dot"></span>
+        <span id="noticeText">Add your RapidAPI key in script.js to load live weather.</span>
+        <button id="dismissNotice" type="button" aria-label="Dismiss message">×</button>
+      </div>
+
+      <section class="hero-card" aria-labelledby="currentWeatherTitle">
+        <div class="hero-glow glow-one"></div><div class="hero-glow glow-two"></div>
+        <div class="hero-main">
+          <div class="location-line"><span class="pin">⌖</span><span id="locationName">Delhi, India</span><span class="live-pill"><i></i> CURRENT WEATHER</span></div>
+          <p class="hero-date" id="currentDate">Loading date…</p>
+          <h2 id="currentWeatherTitle">—°<span>C</span></h2>
+          <div class="condition" id="conditionText">Waiting for weather data</div>
+          <div class="feels-like" id="feelsLike">Feels like —°C</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="weather-emoji" id="weatherEmoji">🌤️</div>
+          <div class="weather-orbit orbit-a"></div><div class="weather-orbit orbit-b"></div>
+        </div>
+        <div class="hero-bottom">
+          <span><b id="highLow">H —° / L —°</b><small>Daily range (if available)</small></span>
+          <span class="hero-bottom-divider"></span>
+          <span><b id="sunSummary">Stay weather-ready</b><small>Today's outlook</small></span>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <div><div class="eyebrow">AT A GLANCE</div><h2>Weather highlights</h2></div>
+          <span class="updated-label"><span class="refresh-symbol">↻</span> <span id="lastUpdated">Not updated yet</span></span>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon humidity">≋</span><span class="stat-label">HUMIDITY</span></div>
+            <div class="stat-value"><span id="humidityValue">—</span><small>%</small></div>
+            <div class="stat-foot"><span class="tiny-bar"><i id="humidityBar"></i></span><span id="humidityHint">Moisture in air</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon wind">〰</span><span class="stat-label">WIND SPEED</span></div>
+            <div class="stat-value"><span id="windValue">—</span><small>m/s</small></div>
+            <div class="stat-foot"><span class="tiny-bar"><i id="windBar"></i></span><span id="windHint">Air movement</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon pressure">◉</span><span class="stat-label">PRESSURE</span></div>
+            <div class="stat-value"><span id="pressureValue">—</span><small>hPa</small></div>
+            <div class="stat-foot"><span class="stat-foot-text" id="pressureHint">Atmospheric pressure</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon visibility">◌</span><span class="stat-label">VISIBILITY</span></div>
+            <div class="stat-value"><span id="visibilityValue">—</span><small>km</small></div>
+            <div class="stat-foot"><span class="stat-foot-text">Distance you can see</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="lower-grid">
+        <article class="panel">
+          <div class="panel-heading"><div><div class="eyebrow">CONDITIONS</div><h2>What it feels like</h2></div><span class="panel-symbol">✦</span></div>
+          <p class="panel-description">A quick summary of the current conditions to help you plan your day.</p>
+          <div class="condition-row"><span class="condition-icon">🌡️</span><span><b>Temperature</b><small>Current air temperature</small></span><strong id="detailTemp">—</strong></div>
+          <div class="condition-row"><span class="condition-icon">💧</span><span><b>Dew point</b><small>Not provided by this API response</small></span><strong id="dewPoint">—</strong></div>
+          <div class="condition-row"><span class="condition-icon">🌬️</span><span><b>Wind direction</b><small>Direction the wind comes from</small></span><strong id="windDirection">—</strong></div>
+        </article>
+        <article class="panel tip-panel">
+          <div class="panel-heading"><div><div class="eyebrow">SMART INSIGHT</div><h2>Today's tip</h2></div><span class="panel-symbol">✧</span></div>
+          <div class="tip-illustration" id="tipEmoji">🌤️</div>
+          <h3 id="tipTitle">A little weather wisdom</h3>
+          <p id="tipText">Search for a city to get a helpful suggestion based on its current weather.</p>
+          <div class="tip-foot"><span class="tip-dot"></span> Generated from current conditions</div>
+        </article>
+      </section>
+
+      <footer class="page-footer">
+        <span><span class="footer-mark">☼</span> SkyCast <span class="footer-muted">· Weather at a glance</span></span>
+        <span>Data provided by your selected RapidAPI weather endpoint</span>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
